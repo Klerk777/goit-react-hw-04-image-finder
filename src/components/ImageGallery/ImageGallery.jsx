@@ -3,15 +3,16 @@ import PropTypes from 'prop-types';
 import ImageGalleryItem from './ImageGalleryItem/ImageGalleryItem';
 import styles from './ImageGallery.module.scss';
 
-export default function ImageGallery({ pictures }) {
+export default function ImageGallery({ pictures, onImageClick }) {
   return (
     <ul className={styles.gallery}>
-      {pictures.map(({ id, webformatURL, tags }) => (
+      {pictures.map(({ id, webformatURL, tags, largeImageURL }) => (
         <ImageGalleryItem
           key={id}
           smallImg={webformatURL}
+          largeImg={largeImageURL}
           tags={tags}
-          // largeImg={item.largeImageURL}
+          onImageClick={onImageClick}
         />
       ))}
     </ul>
