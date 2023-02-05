@@ -4,6 +4,7 @@ import fetchImagesOnQuery from '../../service/api';
 import ImageGallery from '../ImageGallery/ImageGallery';
 import styles from './App.module.scss';
 import Button from 'components/Button/Button';
+import Modal from 'components/Modal/Modal';
 
 export default class App extends Component {
   state = {
@@ -40,8 +41,12 @@ export default class App extends Component {
     console.log('this.largeImageURL', this.state.largeImageURL);
   };
 
+  handleModalClose = () => {
+    this.setState({ largeImageURL: '' });
+  };
+
   render() {
-    const { pictures } = this.state;
+    const { pictures, largeImageURL, query } = this.state;
 
     return (
       <div className={styles.app}>
@@ -54,7 +59,11 @@ export default class App extends Component {
         {pictures.length > 0 && (
           <Button loadMoreClick={this.handleLoadMoreClick} />
         )}
-        {/* TODO: Open/close modal */}
+        {largeImageURL && (
+          <Modal onClose={this.handleModalClose}>
+            <img src={largeImageURL} alt={query} />
+          </Modal>
+        )}
       </div>
     );
   }
