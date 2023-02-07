@@ -19,4 +19,7 @@ export default function ImageGallery({ pictures, onImageClick }) {
   );
 }
 
-ImageGallery.propTypes = {};
+ImageGallery.propTypes = {
+  pictures: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onImageClick: PropTypes.func,
+};

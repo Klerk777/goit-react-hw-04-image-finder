@@ -1,24 +1,21 @@
 import React, { Component } from 'react';
 import { createPortal } from 'react-dom';
 import styles from './Modal.module.scss';
+import PropTypes from 'prop-types';
 
 const modalRoot = document.getElementById('modal-root');
 
 export default class Modal extends Component {
   componentDidMount() {
-    console.log('Modal componentDidMount');
     window.addEventListener('keydown', this.handleKeyDown);
   }
 
   componentWillUnmount() {
-    console.log('Modal componentWillUnmount');
-    window.removeEventListener('keydown', this.handleKeyDown); //unregistering listener when component unmount
-    //TODO: clear App.state.largeImageURL when modal unmount
+    window.removeEventListener('keydown', this.handleKeyDown);
   }
 
   handleKeyDown = e => {
     if (e.code === 'Escape') {
-      console.log('ESC pressed. Need to close modal.');
       this.props.onClose();
     }
   };
@@ -38,3 +35,6 @@ export default class Modal extends Component {
     );
   }
 }
+Modal.propTypes = {
+  onClose: PropTypes.func.isRequired,
+};

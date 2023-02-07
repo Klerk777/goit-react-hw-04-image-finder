@@ -21,7 +21,9 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
     Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
   color: #212121;
-  background-color: #fff;
+  /* background-color: #fff; */
+  /* background-color: rgb(78, 78, 78); */
+  background-color: rgba(77, 77, 77, 0.777);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

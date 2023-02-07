@@ -7,9 +7,7 @@ export default async function fetchImagesOnQuery(query, page) {
   const response = await axios(
     `${REQUEST_BASE_URL}?q=${query}&page=${page}&key=${PIXABAY_API_KEY}&image_type=photo&orientation=horizontal&per_page=12`
   );
-  console.log('response :>> ', response);
   if (response.status === 200) {
-    console.log('response.status :>> ', response.status);
-    return response.data.hits;
+    return response.data;
   }
 }

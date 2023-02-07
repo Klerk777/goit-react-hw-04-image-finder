@@ -6,13 +6,14 @@ export default class Searchbar extends Component {
   state = {
     query: '',
   };
+
   handleInputChange = e => {
     this.setState({ query: e.target.value });
   };
+
   handleSubmitForm = e => {
     const { query } = this.state;
     e.preventDefault();
-    console.log('Form submited. Send this.state to App >>', query);
     this.props.onSubmit(query);
     this.setState({ query: '' });
   };
@@ -41,3 +42,7 @@ export default class Searchbar extends Component {
     );
   }
 }
+
+Searchbar.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+};

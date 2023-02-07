@@ -15,4 +15,9 @@ export default function ImageGalleryItem({
   );
 }
 
-ImageGalleryItem.propTypes = {};
+ImageGalleryItem.propTypes = {
+  smallImg: PropTypes.string.isRequired,
+  tags: PropTypes.string,
+  onImageClick: PropTypes.func,
+  largeImg: PropTypes.string.isRequired,
+};
