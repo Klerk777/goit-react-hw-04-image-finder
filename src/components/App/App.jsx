@@ -21,8 +21,6 @@ export default class App extends Component {
     error: null,
   };
 
-  componentDidMount() {}
-
   async componentDidUpdate(pP, pS) {
     const { query, page } = this.state;
     let totalHits = 0;
@@ -49,6 +47,7 @@ export default class App extends Component {
           isLoading: false,
           isVisible: prevState.pictures.length < totalHits,
         }));
+        console.log('this.state.pictures', this.state.pictures);
       }
   }
 
@@ -67,12 +66,36 @@ export default class App extends Component {
     }
   };
 
-  handleLoadMoreClick = () => {
+  handleIncrementPage = () => {
     this.setState(prevState => ({ page: prevState.page + 1 }));
   };
 
   handleImageClick = largeImageURL => {
     this.setState({ largeImageURL });
+  };
+
+  handleSelectPrevImg = () => {
+    const { pictures, largeImageURL } = this.state;
+    const prevIndex =
+      pictures.findIndex(pic => pic.largeImageURL === largeImageURL) - 1;
+    console.log('prevPicturesIndex :>> ', prevIndex);
+
+    if (prevIndex < 0) return;
+    this.setState({ largeImageURL: pictures[prevIndex].largeImageURL });
+  };
+
+  handleSelectNextImg = () => {
+    const { pictures, largeImageURL } = this.state;
+    const nextIndex =
+      pictures.findIndex(pic => pic.largeImageURL === largeImageURL) + 1;
+    console.log('nextPicturesIndex :>> ', nextIndex);
+
+    if (nextIndex < pictures.length) {
+      this.setState({ largeImageURL: pictures[nextIndex].largeImageURL });
+    }
+    if (nextIndex === pictures.length) {
+      this.handleIncrementPage();
+    }
   };
 
   handleModalClose = () => {
@@ -95,7 +118,7 @@ export default class App extends Component {
         )}
 
         {pictures.length > 0 && isVisible && !isLoading && (
-          <Button loadMoreClick={this.handleLoadMoreClick} />
+          <Button loadMoreClick={this.handleIncrementPage} />
         )}
 
         <ThreeDots
@@ -113,7 +136,11 @@ export default class App extends Component {
         />
 
         {largeImageURL && (
-          <Modal onClose={this.handleModalClose}>
+          <Modal
+            onClose={this.handleModalClose}
+            onPrevImg={this.handleSelectPrevImg}
+            onNextImg={this.handleSelectNextImg}
+          >
             <img src={largeImageURL} alt={query} />
           </Modal>
         )}

@@ -15,8 +15,19 @@ export default class Modal extends Component {
   }
 
   handleKeyDown = e => {
+    console.log('e :>> ', e);
+    console.log('key code', e.code);
+
     if (e.code === 'Escape') {
       this.props.onClose();
+    }
+
+    if (e.code === 'ArrowLeft') {
+      this.props.onPrevImg();
+    }
+
+    if (e.code === 'ArrowRight') {
+      this.props.onNextImg();
     }
   };
 
@@ -37,4 +48,5 @@ export default class Modal extends Component {
 }
 Modal.propTypes = {
   onClose: PropTypes.func.isRequired,
+  onNextImg: PropTypes.func,
 };
