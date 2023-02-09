@@ -9,6 +9,7 @@ import Modal from 'components/Modal/Modal';
 import styles from './App.module.scss';
 import 'react-toastify/dist/ReactToastify.css';
 import StartMessage from 'components/StartMessage/StartMessage';
+import LargeImage from 'components/LargeImage/LargeImage';
 
 export default class App extends Component {
   state = {
@@ -16,6 +17,7 @@ export default class App extends Component {
     page: 1,
     pictures: [],
     largeImageURL: '',
+    tags: '',
     isLoading: false,
     isVisible: false,
     error: null,
@@ -70,8 +72,8 @@ export default class App extends Component {
     this.setState(prevState => ({ page: prevState.page + 1 }));
   };
 
-  handleImageClick = largeImageURL => {
-    this.setState({ largeImageURL });
+  handleImageClick = (largeImageURL, tags) => {
+    this.setState({ largeImageURL, tags });
   };
 
   handleSelectPrevImg = () => {
@@ -81,7 +83,10 @@ export default class App extends Component {
     console.log('prevPicturesIndex :>> ', prevIndex);
 
     if (prevIndex < 0) return;
-    this.setState({ largeImageURL: pictures[prevIndex].largeImageURL });
+    this.setState({
+      largeImageURL: pictures[prevIndex].largeImageURL,
+      tags: pictures[prevIndex].tags,
+    });
   };
 
   handleSelectNextImg = () => {
@@ -91,7 +96,10 @@ export default class App extends Component {
     console.log('nextPicturesIndex :>> ', nextIndex);
 
     if (nextIndex < pictures.length) {
-      this.setState({ largeImageURL: pictures[nextIndex].largeImageURL });
+      this.setState({
+        largeImageURL: pictures[nextIndex].largeImageURL,
+        tags: pictures[nextIndex].tags,
+      });
     }
     if (nextIndex === pictures.length) {
       this.handleIncrementPage();
@@ -99,11 +107,11 @@ export default class App extends Component {
   };
 
   handleModalClose = () => {
-    this.setState({ largeImageURL: '' });
+    this.setState({ largeImageURL: '', tags: '' });
   };
 
   render() {
-    const { pictures, largeImageURL, query, isVisible, isLoading } = this.state;
+    const { pictures, largeImageURL, tags, isVisible, isLoading } = this.state;
 
     return (
       <div className={styles.app}>
@@ -141,7 +149,7 @@ export default class App extends Component {
             onPrevImg={this.handleSelectPrevImg}
             onNextImg={this.handleSelectNextImg}
           >
-            <img src={largeImageURL} alt={query} />
+            <LargeImage largeImageURL={largeImageURL} tags={tags} />
           </Modal>
         )}
 

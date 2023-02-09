@@ -10,7 +10,11 @@ export default function ImageGalleryItem({
 }) {
   return (
     <li className={styles.galleryItem}>
-      <img src={smallImg} alt={tags} onClick={() => onImageClick(largeImg)} />
+      <img
+        src={smallImg}
+        alt={tags}
+        onClick={() => onImageClick(largeImg, tags)}
+      />
     </li>
   );
 }
