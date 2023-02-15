@@ -122,7 +122,7 @@ export default class App extends Component {
           onImageClick={this.handleImageClick}
         />
         {pictures.length === 0 && (
-          <StartMessage message="Hello!!! Let's find some cool photos! Just typing your query for search!" />
+          <StartMessage message="Hello!! Let's find some cool photos! Just typing your query for search!" />
         )}
 
         {pictures.length > 0 && isVisible && !isLoading && (
