@@ -1,52 +1,52 @@
-import React, { Component } from 'react';
+import { useEffect, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import styles from './Modal.module.scss';
 import PropTypes from 'prop-types';
 
 const modalRoot = document.getElementById('modal-root');
 
-export default class Modal extends Component {
-  componentDidMount() {
-    window.addEventListener('keydown', this.handleKeyDown);
-  }
+export default function Modal({ onClose, onPrevImg, onNextImg, children }) {
+  const handleKeyDown = useCallback(
+    e => {
+      if (e.code === 'Escape') {
+        onClose();
+      }
 
-  componentWillUnmount() {
-    window.removeEventListener('keydown', this.handleKeyDown);
-  }
+      if (e.code === 'ArrowLeft') {
+        onPrevImg();
+      }
 
-  handleKeyDown = e => {
-    console.log('e :>> ', e);
-    console.log('key code', e.code);
+      if (e.code === 'ArrowRight') {
+        onNextImg();
+      }
+    },
+    [onClose, onNextImg, onPrevImg]
+  );
 
-    if (e.code === 'Escape') {
-      this.props.onClose();
-    }
+  useEffect(() => {
+    window.addEventListener('keydown', handleKeyDown);
 
-    if (e.code === 'ArrowLeft') {
-      this.props.onPrevImg();
-    }
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [handleKeyDown]);
 
-    if (e.code === 'ArrowRight') {
-      this.props.onNextImg();
-    }
-  };
-
-  handleBackdropClick = e => {
+  const handleBackdropClick = e => {
     if (e.target === e.currentTarget) {
-      this.props.onClose();
+      onClose();
     }
   };
 
-  render() {
-    return createPortal(
-      <div className={styles.overlay} onClick={this.handleBackdropClick}>
-        <div className={styles.modal}>{this.props.children}</div>
-      </div>,
-      modalRoot
-    );
-  }
+  return createPortal(
+    <div className={styles.overlay} onClick={handleBackdropClick}>
+      <div className={styles.modal}>{children}</div>
+    </div>,
+    modalRoot
+  );
 }
+
 Modal.propTypes = {
   onClose: PropTypes.func.isRequired,
+  onPrevImg: PropTypes.func,
   onNextImg: PropTypes.func,
 };
