@@ -30,12 +30,12 @@ export default function App() {
       try {
         setIsLoading(true);
         const response = await fetchImagesOnQuery(query, page);
-        const picArray = response.hits.map(
+        const imgArray = response.hits.map(
           ({ id, largeImageURL, webformatURL, tags }) => {
             return { id, largeImageURL, webformatURL, tags };
           }
         );
-
+        console.log('response :>> ', response);
         if (response.totalHits < 1) {
           toast.error('Unfortunately, nothing was found for your query', {
             icon: '😢',
@@ -43,7 +43,7 @@ export default function App() {
         }
 
         setTotalHits(response.totalHits);
-        setPictures(prev => [...prev, ...picArray]);
+        setPictures(prev => [...prev, ...imgArray]);
       } catch (error) {
         setError(error.message);
       } finally {
@@ -90,13 +90,12 @@ export default function App() {
   const handleSelectNextImg = () => {
     const nextIndex =
       pictures.findIndex(pic => pic.largeImageURL === largeImageURL) + 1;
-    console.log('nextPicturesIndex :>> ', nextIndex);
 
     if (nextIndex < pictures.length) {
       setLargeImageURL(pictures[nextIndex].largeImageURL);
       setTags(pictures[nextIndex].tags);
     }
-    if (nextIndex === pictures.length) {
+    if (nextIndex === pictures.length && nextIndex !== totalHits) {
       handleIncrementPage();
     }
   };
@@ -140,7 +139,12 @@ export default function App() {
           onPrevImg={handleSelectPrevImg}
           onNextImg={handleSelectNextImg}
         >
-          <LargeImage largeImageURL={largeImageURL} tags={tags} />
+          <LargeImage
+            largeImageURL={largeImageURL}
+            tags={tags}
+            onPrevImg={handleSelectPrevImg}
+            onNextImg={handleSelectNextImg}
+          />
         </Modal>
       )}
 

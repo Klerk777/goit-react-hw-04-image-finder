@@ -1,3 +1,6 @@
+.largeImgBox {
+  position: relative;
+}
 .imgTags {
   position: relative;
   bottom: 22px;
@@ -6,4 +9,24 @@
   padding: 2px 6px;
   color: aliceblue;
   background-color: rgba(0, 0, 0, 0.692);
+}
+.arrow {
+  position: absolute;
+  top: 50%;
+  display: block;
+  width: 40px;
+  height: 40px;
+  background-size: 90%;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.9;
+  cursor: pointer;
+  &.back {
+    left: -50px;
+    background-image: url(../../images/Arrow-Back.svg);
+  }
+  &.forward {
+    right: -50px;
+    background-image: url(../../images/Arrow-Forward.svg);
+  }
 }
