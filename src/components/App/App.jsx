@@ -112,7 +112,7 @@ export default function App() {
 
       <ImageGallery pictures={pictures} onImageClick={handleImageClick} />
       {pictures.length === 0 && (
-        <StartMessage message="Hello!! Let's find some cool photos! Just typing your query for search!" />
+        <StartMessage message="Let's find some cool photos! Just typing your query for search!" />
       )}
 
       {pictures.length > 0 && pictures.length < totalHits && !isLoading && (
